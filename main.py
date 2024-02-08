@@ -1,13 +1,29 @@
 from math import degrees, sin, cos, atan2
 from random import randint
 
-from pygame import init, font, display, image, transform, time, fastevent, FINGERDOWN, FINGERMOTION, FINGERUP, gfxdraw, \
-	mixer
+from pygame import *
+"""
+    init, font, display, image, transform, time, fastevent, FINGERDOWN, FINGERMOTION, FINGERUP, gfxdraw, \
+	mixer, SCALED, RESIZABLE
+"""
 from pymunk import Body, Circle, Poly, Space, pygame_util, constraints, PinJoint
+
+from settings import Settings
 
 init()
 fastevent.init()
-screen = display.set_mode((1080, 2290))
+
+settings = Settings()
+
+# use PyAutoGui to make a more sensible size for the screen instead of hard-coded values.
+# set_mode(size=(0, 0), flags=0, depth=0, display=0, vsync=0) -> Surface
+#screen = display.set_mode((1080, 2290))
+print(f'scaled screen size is width: {settings.screen_width}, height: {settings.screen_height}')
+scaled_screen_size = (settings.screen_width, settings.screen_height)
+flags = pygame.RESIZABLE | pygame.SCALED
+screen = pygame.display.set_mode(scaled_screen_size, flags)
+
+
 options = pygame_util.DrawOptions(screen)
 space = Space()
 space.gravity = 0, 600
@@ -251,6 +267,7 @@ def Circle_object(x, y, radius, e, c_t):
     shape.collision_type = c_t
     space.add(body, shape)
 
+# TODO: adjust these hard-coded values to react to scaled game size
 
 # base_bat
 left_base_bat = Base_bat(410, 1900, 46, ((100, 25), (100, -25), (-105, 10), (-105, -10), (110, 0)))
