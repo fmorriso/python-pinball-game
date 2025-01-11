@@ -7,6 +7,7 @@ Two year old (as of February 2024) pinball game written in Python
 | Python  |   3.13.1 |
 | PyCharm | 2024.3.1 |
 | VSCode  |   1.96.2 |
+| Pygame  |    2.6.1 |
 | Pymunk  |   6.10.0 |
 
 
