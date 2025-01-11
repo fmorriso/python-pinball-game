@@ -1,7 +1,10 @@
 from math import degrees, sin, cos, atan2
 from random import randint
 
+import pygame
 from pygame import *
+from pygame import gfxdraw
+
 """
     init, font, display, image, transform, time, fastevent, FINGERDOWN, FINGERMOTION, FINGERUP, gfxdraw, \
 	mixer, SCALED, RESIZABLE
@@ -82,7 +85,7 @@ ice_c_t_sound = take_sound("ice_c_t.mp3")
 sort_c_t_sound = take_sound("sort_c_t.mp3")
 
 
-class Base_bat:
+class BaseBat:
     def __init__(self, x, y, a, vect):
         self.body = Body(1, 1, Body.KINEMATIC)
         self.body.position = x, y
@@ -130,7 +133,7 @@ class Base_bat:
         screen.blit(n, (self.body.position[0] - n.get_width() // 2, self.body.position[1] - n.get_height() // 2))
 
 
-class Push_block:
+class PushBlock:
     def __init__(self, x, y, x2, y2):
         self.body = Body(100, 4450)
         self.body.position = x, y
@@ -160,7 +163,7 @@ class Push_block:
         screen.blit(n, (self.body.position[0] - n.get_width() // 2, self.body.position[1] - n.get_height() // 2))
 
 
-class Base_ball:
+class BaseBall:
     def __init__(self, x, y):
         self.body = Body(1, 200)
         self.body.position = x, y
@@ -184,7 +187,7 @@ class Base_ball:
                         (0, randint(0, 255), randint(0, 255)))
 
 
-class Disco_ball:
+class DiscoBall:
     def __init__(self, x, y):
         self.body = Body(1, 1, Body.KINEMATIC)
         self.body.position = x, y
@@ -200,7 +203,7 @@ class Disco_ball:
         screen.blit(n, (self.body.position[0] - n.get_width() // 2, self.body.position[1] - n.get_height() // 2))
 
 
-class Ice_rectangle:
+class IceRectangle:
     def __init__(self, x, y):
         self.body = Body(1, 445)
         self.body.position = x, y
@@ -221,7 +224,7 @@ class Ice_rectangle:
         screen.blit(n, (self.body.position[0] - n.get_width() // 2, self.body.position[1] - n.get_height() // 2))
 
 
-class Laser_blade:
+class LaserBlade:
     def __init__(self, x, y, a_v):
         self.body = Body(1, 1, Body.KINEMATIC)
         self.body.position = x, y
@@ -237,7 +240,7 @@ class Laser_blade:
         screen.blit(n, (self.body.position[0] - n.get_width() // 2, self.body.position[1] - n.get_height() // 2))
 
 
-def Poly_object(x, y, vect, e, c_t):
+def PolyObject(x, y, vect, e, c_t):
     body = Body(1, 1, Body.KINEMATIC)
     body.position = x, y
     shape = Poly(body, vect)
@@ -247,7 +250,7 @@ def Poly_object(x, y, vect, e, c_t):
     space.add(body, shape)
 
 
-def Rectangle_object(x, y, a, size):
+def RectangleObject(x, y, a, size):
     body = Body(1, 1, Body.KINEMATIC)
     body.position = x, y
     body.angle = a
@@ -258,7 +261,7 @@ def Rectangle_object(x, y, a, size):
     space.add(body, shape)
 
 
-def Circle_object(x, y, radius, e, c_t):
+def CircleObject(x, y, radius, e, c_t):
     body = Body(1, 1, Body.KINEMATIC)
     body.position = x, y
     shape = Circle(body, radius)
@@ -270,61 +273,61 @@ def Circle_object(x, y, radius, e, c_t):
 # TODO: adjust these hard-coded values to react to scaled game size
 
 # base_bat
-left_base_bat = Base_bat(410, 1900, 46, ((100, 25), (100, -25), (-105, 10), (-105, -10), (110, 0)))
-right_base_bat = Base_bat(1080 - 410, 1900, -46, ((105, 10), (105, -10), (-100, 25), (-100, -25), (-110, 0)))
+left_base_bat = BaseBat(410, 1900, 46, ((100, 25), (100, -25), (-105, 10), (-105, -10), (110, 0)))
+right_base_bat = BaseBat(1080 - 410, 1900, -46, ((105, 10), (105, -10), (-100, 25), (-100, -25), (-110, 0)))
 # push_block
-push_block_left = Push_block(150, 1885, 150, 2000)
-push_block_right = Push_block(1080 - 150, 1885, 1080 - 150, 2000)
+push_block_left = PushBlock(150, 1885, 150, 2000)
+push_block_right = PushBlock(1080 - 150, 1885, 1080 - 150, 2000)
 # base_ball
-base_ball = Base_ball(150, 1800)
+base_ball = BaseBall(150, 1800)
 ###frame
 ##down
 # left
-Rectangle_object(110, 1735, 0, (25, 550))
-Rectangle_object(190, 1935, 0, (25, 140))
-Rectangle_object(190, 1555, 0, (25, 190))
-Rectangle_object(150, 1740 + 275, 1.57079, (25, 80))
-Rectangle_object(300, 1780, -0.71558, (25, 340))
-Rectangle_object(290, 1995, -0.71558, (25, 310))
+RectangleObject(110, 1735, 0, (25, 550))
+RectangleObject(190, 1935, 0, (25, 140))
+RectangleObject(190, 1555, 0, (25, 190))
+RectangleObject(150, 1740 + 275, 1.57079, (25, 80))
+RectangleObject(300, 1780, -0.71558, (25, 340))
+RectangleObject(290, 1995, -0.71558, (25, 310))
 # right
-Rectangle_object(1080 - 110, 1735, 0, (25, 550))
-Rectangle_object(1080 - 190, 1935, 0, (25, 140))
-Rectangle_object(1080 - 190, 1555, 0, (25, 190))
-Rectangle_object(1080 - 150, 1740 + 275, 1.57079, (25, 80))
-Rectangle_object(1080 - 300, 1780, 0.71558, (25, 340))
-Rectangle_object(1080 - 290, 1995, 0.71558, (25, 310))
+RectangleObject(1080 - 110, 1735, 0, (25, 550))
+RectangleObject(1080 - 190, 1935, 0, (25, 140))
+RectangleObject(1080 - 190, 1555, 0, (25, 190))
+RectangleObject(1080 - 150, 1740 + 275, 1.57079, (25, 80))
+RectangleObject(1080 - 300, 1780, 0.71558, (25, 340))
+RectangleObject(1080 - 290, 1995, 0.71558, (25, 310))
 # main_frame
-Rectangle_object(5, 830, 0, (35, 990))
-Rectangle_object(1080 - 5, 830, 0, (35, 990))
-Rectangle_object(50, 1400, -0.66322, (35, 170))
-Rectangle_object(1080 - 50, 1400, 0.66322, (35, 170))
-Rectangle_object(135, 230, 0.89011, (35, 330))
-Rectangle_object(1080 - 135, 230, -0.89011, (35, 330))
-Rectangle_object(540, 120, 1.57079, (35, 540))
+RectangleObject(5, 830, 0, (35, 990))
+RectangleObject(1080 - 5, 830, 0, (35, 990))
+RectangleObject(50, 1400, -0.66322, (35, 170))
+RectangleObject(1080 - 50, 1400, 0.66322, (35, 170))
+RectangleObject(135, 230, 0.89011, (35, 330))
+RectangleObject(1080 - 135, 230, -0.89011, (35, 330))
+RectangleObject(540, 120, 1.57079, (35, 540))
 ###object
 # crown
-Rectangle_object(475, 310, -0.29670, (20, 110))
-Rectangle_object(1080 - 475, 310, 0.29670, (20, 110))
+RectangleObject(475, 310, -0.29670, (20, 110))
+RectangleObject(1080 - 475, 310, 0.29670, (20, 110))
 xd, yd = 540, 0
 # ramp
-Poly_object(320, 1565, ((60, 135), (-45, 55), (-45, -135)), 2, sort_c_t)
-Poly_object(1080 - 320, 1565, ((-60, 135), (45, 55), (45, -135)), 2, sort_c_t)
+PolyObject(320, 1565, ((60, 135), (-45, 55), (-45, -135)), 2, sort_c_t)
+PolyObject(1080 - 320, 1565, ((-60, 135), (45, 55), (45, -135)), 2, sort_c_t)
 # disco_ball
-disco_ball = Disco_ball(540, 1200)
+disco_ball = DiscoBall(540, 1200)
 # ice_rectangle
-ice_rectangle = Ice_rectangle(540, 1450)
-left_laser_blade = Laser_blade(250, 800, 10)
-right_laser_blade = Laser_blade(1080 - 250, 800, -10)
+ice_rectangle = IceRectangle(540, 1450)
+left_laser_blade = LaserBlade(250, 800, 10)
+right_laser_blade = LaserBlade(1080 - 250, 800, -10)
 # triple_circle
-Circle_object(448, 673, 50, 1.75, sort_c_t)
-Circle_object(587, 559, 50, 1.75, sort_c_t)
-Circle_object(604, 761, 50, 1.75, sort_c_t)
+CircleObject(448, 673, 50, 1.75, sort_c_t)
+CircleObject(587, 559, 50, 1.75, sort_c_t)
+CircleObject(604, 761, 50, 1.75, sort_c_t)
 # ice_plate_triangle
-Poly_object(223, 332, ((105, 75), (-105, 75), (105, -75)), 0.75, ice_c_t)
-Poly_object(1080 - 223, 332, ((105, 75), (-105, 75), (-105, -75)), 0.75, ice_c_t)
+PolyObject(223, 332, ((105, 75), (-105, 75), (105, -75)), 0.75, ice_c_t)
+PolyObject(1080 - 223, 332, ((105, 75), (-105, 75), (-105, -75)), 0.75, ice_c_t)
 # ice_plate_circle
-Circle_object(299, 1197, 30, 2, ice_c_t)
-Circle_object(1080 - 299, 1197, 30, 2, ice_c_t)
+CircleObject(299, 1197, 30, 2, ice_c_t)
+CircleObject(1080 - 299, 1197, 30, 2, ice_c_t)
 res = 0
 
 
@@ -346,7 +349,7 @@ def Sort_c_type(space, arbiter, data):
     return True
 
 
-while 1:
+while True:
     # collision_handler
     space.add_collision_handler(0, 1).begin = Hard_c_type
     space.add_collision_handler(0, 2).begin = Ice_c_type
@@ -374,7 +377,7 @@ while 1:
         res = 1
     if res == 1:
         space.remove(base_ball.body, base_ball.shape)
-        base_ball = Base_ball(150, 1800)
+        base_ball = BaseBall(150, 1800)
         res = 0
     ice_rectangle.animation()
     disco_ball.animation()
