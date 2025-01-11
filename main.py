@@ -8,12 +8,12 @@ from pygame import *
 """
 from pymunk import Body, Circle, Poly, Space, pygame_util, constraints, PinJoint
 
-from settings import Settings
+from gui_settings import GuiSettings
 
 init()
 fastevent.init()
 
-settings = Settings()
+settings = GuiSettings()
 
 # use PyAutoGui to make a more sensible size for the screen instead of hard-coded values.
 # set_mode(size=(0, 0), flags=0, depth=0, display=0, vsync=0) -> Surface

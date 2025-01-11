@@ -1,5 +1,15 @@
 # Python Pinball Game
 Two year old (as of February 2024) pinball game written in Python
+## Tools Used
+
+| Tool    |  Version |
+|:--------|---------:|
+| Python  |   3.13.1 |
+| PyCharm | 2024.3.1 |
+| VSCode  |   1.96.2 |
+| Pymunk  |   6.10.0 |
+
+
 ## References
 * [Original GitHub Repo](https://github.com/Dungjax/Pinball)
 * [YouTube Video](https://www.youtube.com/watch?v=hp8VBkwkNOw)

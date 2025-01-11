@@ -4,7 +4,7 @@ import pathlib
 import pyautogui
 
 
-class Settings:
+class GuiSettings:
     """A class to store all settings for Pinball game."""
 
     def __init__(self):
